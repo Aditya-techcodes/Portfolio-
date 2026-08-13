@@ -4,16 +4,21 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Space Grotesk', sans-serif;
-    background-color: #0F2E2B;
-    color: #F1EFE7;
+    background-color: #FBFAF7;
+    color: #16161C;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-heading, .font-serif-display {
-    font-family: 'Fraunces', serif;
+  html.dark {
+    background-color: #0E0E12;
+    color: #FBFAF7;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Space Grotesk', sans-serif;
   }
 
   body, p, span, div, .font-body {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   code, pre, .font-mono, .font-mono-tag {
@@ -22,74 +27,58 @@
 
   /* Keyboard focus states */
   *:focus-visible {
-    outline: 2px solid #FF6B4A;
+    outline: 2px solid #1B4DFF;
     outline-offset: 2px;
   }
 }
 
 /* Custom font utilities */
 .font-display {
-  font-family: 'Fraunces', serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .font-sans-body {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .font-mono-code {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom scrollbar styling for Editor / Terminal theme */
+/* Custom scrollbar styling for modern theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B2220;
+  background: rgba(0, 0, 0, 0.05);
+}
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1B4541;
+  background: rgba(27, 77, 255, 0.3);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF6B4A;
+  background: #1B4DFF;
 }
 
 /* Accent utilities */
-.bg-teal-base {
-  background-color: #0F2E2B;
+.bg-brand-blue {
+  background-color: #1B4DFF;
 }
 
-.bg-teal-surface {
-  background-color: #153E3A;
+.text-brand-blue {
+  color: #1B4DFF;
 }
 
-.bg-teal-card {
-  background-color: #123733;
+.text-brand-orange {
+  color: #FF5A1F;
 }
 
-.text-coral {
-  color: #FF6B4A;
+.bg-brand-orange {
+  background-color: #FF5A1F;
 }
 
-.bg-coral {
-  background-color: #FF6B4A;
-}
-
-.text-acid {
-  color: #F4D35E;
-}
-
-.bg-acid {
-  background-color: #F4D35E;
-}
-
-.text-offwhite {
-  color: #F1EFE7;
-}
-
-.border-teal-muted {
-  border-color: #225651;
-}
 

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Terminal, ArrowUpRight } from 'lucide-react';
+import { Menu, X, Code2, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { personalInfo } from '../../data/portfolioData';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 const navLinks = [
-  { name: '~/about', href: '#about' },
-  { name: '~/projects', href: '#projects' },
-  { name: '~/skills', href: '#skills' },
-  { name: '~/experience', href: '#experience' },
-  { name: '~/github', href: '#github-stats' },
-  { name: '~/resume', href: '#resume' },
-  { name: '~/contact', href: '#contact' }
+  { name: 'About', href: '#about' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'GitHub', href: '#github-stats' },
+  { name: 'Resume', href: '#resume' },
+  { name: 'Contact', href: '#contact' }
 ];
 
 export const Navbar: React.FC = () => {
@@ -62,29 +63,27 @@ export const Navbar: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'py-3 bg-[#0F2E2B]/95 backdrop-blur-md shadow-lg border-b border-[#225651]'
+          ? 'py-3 bg-[#FBFAF7]/90 dark:bg-[#0E0E12]/90 backdrop-blur-md shadow-sm border-b border-black/10 dark:border-white/10'
           : 'py-5 bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo - Terminal File System style */}
+        {/* Brand Logo */}
         <a
           href="#top"
           onClick={(e) => handleNavClick(e, '#top')}
-          className="group flex items-center gap-2.5 font-mono text-sm sm:text-base font-bold text-[#F1EFE7]"
+          className="group flex items-center gap-2.5 font-heading text-base sm:text-lg font-bold text-[#16161C] dark:text-[#FBFAF7]"
         >
-          <div className="w-8 h-8 rounded-lg bg-[#FF6B4A] flex items-center justify-center text-[#0F2E2B] shadow-md group-hover:scale-105 transition-transform">
-            <Terminal className="w-4 h-4 stroke-[2.5]" />
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#1B4DFF] to-[#FF5A1F] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+            <Code2 className="w-5 h-5" />
           </div>
           <span className="tracking-tight">
-            <span className="text-[#F4D35E]">~/</span>
-            {personalInfo.name.toLowerCase().replace(' ', '')}
-            <span className="text-[#FF6B4A]">.ts</span>
+            {personalInfo.name}
           </span>
         </a>
 
-        {/* Desktop Navigation File Paths */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#153E3A] px-3 py-1.5 rounded-xl border border-[#225651]">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-1 bg-black/5 dark:bg-white/5 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
@@ -92,16 +91,16 @@ export const Navbar: React.FC = () => {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`relative px-3.5 py-1 text-xs font-mono transition-colors rounded-lg ${
+                className={`relative px-4 py-1.5 text-xs font-heading font-semibold transition-colors rounded-full ${
                   isActive
-                    ? 'text-[#0F2E2B] font-bold'
-                    : 'text-[#F1EFE7]/80 hover:text-[#FF6B4A]'
+                    ? 'text-white'
+                    : 'text-[#16161C]/70 dark:text-[#FBFAF7]/70 hover:text-[#1B4DFF] dark:hover:text-[#FF5A1F]'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNavTab"
-                    className="absolute inset-0 bg-[#F4D35E] rounded-lg -z-10"
+                    className="absolute inset-0 bg-[#1B4DFF] dark:bg-[#FF5A1F] rounded-full -z-10 shadow-sm"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -111,15 +110,17 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Right CTA */}
+        {/* Right CTA + Theme Toggle */}
         <div className="flex items-center gap-3">
+          <ThemeToggle />
+
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#FF6B4A] text-[#0F2E2B] font-mono font-bold text-xs tracking-wide shadow-md hover:bg-[#ff8266] transition-all transform hover:-translate-y-0.5 cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#16161C] text-white dark:bg-[#FBFAF7] dark:text-[#16161C] font-heading font-semibold text-xs tracking-wide shadow-md hover:bg-[#1B4DFF] dark:hover:bg-[#FF5A1F] dark:hover:text-white transition-all transform hover:-translate-y-0.5 cursor-pointer"
           >
-            <span>init_contact()</span>
-            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>Let's Talk</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
 
           {/* Mobile Hamburger Menu Toggle */}
@@ -127,7 +128,7 @@ export const Navbar: React.FC = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             id="mobile-menu-toggle-btn"
             aria-label="Toggle Navigation Menu"
-            className="lg:hidden p-2 rounded-xl bg-[#153E3A] text-[#F1EFE7] border border-[#225651] hover:bg-[#1C514C] transition-colors"
+            className="lg:hidden p-2.5 rounded-full bg-black/5 dark:bg-white/10 text-[#16161C] dark:text-[#FBFAF7] border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/20 transition-colors"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -142,7 +143,7 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="lg:hidden bg-[#0F2E2B] border-b border-[#225651] overflow-hidden"
+            className="lg:hidden bg-[#FBFAF7] dark:bg-[#0E0E12] border-b border-black/10 dark:border-white/10 overflow-hidden"
           >
             <div className="px-6 py-6 space-y-2 max-w-md mx-auto">
               {navLinks.map((link) => {
@@ -152,10 +153,10 @@ export const Navbar: React.FC = () => {
                     key={link.name}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className={`flex items-center justify-between p-3 rounded-xl text-xs font-mono font-medium transition-colors ${
+                    className={`flex items-center justify-between p-3.5 rounded-2xl text-xs font-heading font-semibold transition-colors ${
                       isActive
-                        ? 'bg-[#FF6B4A] text-[#0F2E2B] font-bold'
-                        : 'text-[#F1EFE7] bg-[#153E3A] border border-[#225651] hover:text-[#F4D35E]'
+                        ? 'bg-[#1B4DFF] text-white dark:bg-[#FF5A1F]'
+                        : 'text-[#16161C] dark:text-[#FBFAF7] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10'
                     }`}
                   >
                     <span>{link.name}</span>
@@ -168,9 +169,9 @@ export const Navbar: React.FC = () => {
                 <a
                   href="#contact"
                   onClick={(e) => handleNavClick(e, '#contact')}
-                  className="w-full flex items-center justify-center gap-2 p-3.5 rounded-xl bg-[#F4D35E] text-[#0F2E2B] font-mono font-bold text-xs"
+                  className="w-full flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-[#1B4DFF] text-white font-heading font-semibold text-xs shadow-md"
                 >
-                  <span>init_contact()</span>
+                  <span>Get in Touch</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
               </div>
@@ -181,4 +182,5 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+
 
