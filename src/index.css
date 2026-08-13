@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #0F2E2B;
+    color: #F1EFE7;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading, .font-serif-display {
+    font-family: 'Fraunces', serif;
+  }
+
+  body, p, span, div, .font-body {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  code, pre, .font-mono, .font-mono-tag {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Keyboard focus states */
+  *:focus-visible {
+    outline: 2px solid #FF6B4A;
+    outline-offset: 2px;
+  }
+}
+
+/* Custom font utilities */
+.font-display {
+  font-family: 'Fraunces', serif;
+}
+
+.font-sans-body {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom scrollbar styling for Editor / Terminal theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B2220;
+}
+::-webkit-scrollbar-thumb {
+  background: #1B4541;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF6B4A;
+}
+
+/* Accent utilities */
+.bg-teal-base {
+  background-color: #0F2E2B;
+}
+
+.bg-teal-surface {
+  background-color: #153E3A;
+}
+
+.bg-teal-card {
+  background-color: #123733;
+}
+
+.text-coral {
+  color: #FF6B4A;
+}
+
+.bg-coral {
+  background-color: #FF6B4A;
+}
+
+.text-acid {
+  color: #F4D35E;
+}
+
+.bg-acid {
+  background-color: #F4D35E;
+}
+
+.text-offwhite {
+  color: #F1EFE7;
+}
+
+.border-teal-muted {
+  border-color: #225651;
+}
+
