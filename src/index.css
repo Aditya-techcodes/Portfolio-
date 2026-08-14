@@ -1,12 +1,26 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   html {
     scroll-behavior: smooth;
     font-family: 'Space Grotesk', sans-serif;
+    background-color: #FBFAF7;
+    color: #12131A;
+    color-scheme: light;
+    transition: background-color 300ms ease, color 300ms ease;
+  }
+
+  html.dark {
     background-color: #0E0E12;
     color: #FBFAF7;
     color-scheme: dark;
+  }
+
+  body {
+    background-color: transparent;
+    transition: background-color 300ms ease, color 300ms ease;
   }
 
   h1, h2, h3, h4, h5, h6, .font-heading {
@@ -48,6 +62,10 @@
 }
 
 ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.dark ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.03);
 }
 
@@ -80,4 +98,9 @@
 /* Perspective utility */
 .perspective-1000 {
   perspective: 1000px;
+}
+
+/* Smooth transition for theme switches */
+.theme-transition {
+  transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease, box-shadow 300ms ease;
 }

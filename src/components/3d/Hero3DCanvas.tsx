@@ -4,7 +4,6 @@ import * as THREE from 'three';
 export const Hero3DCanvas: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasError, setHasError] = useState(false);
-  const [activeShape, setActiveShape] = useState<'torusKnot' | 'icosahedron' | 'wireframeGlobe'>('torusKnot');
 
   useEffect(() => {
     const container = containerRef.current;
@@ -18,7 +17,7 @@ export const Hero3DCanvas: React.FC = () => {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
         45,
-        container.clientWidth / container.clientHeight,
+        container.clientWidth / Math.max(container.clientHeight, 1),
         0.1,
         1000
       );
@@ -33,7 +32,7 @@ export const Hero3DCanvas: React.FC = () => {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(container.clientWidth, container.clientHeight);
       
-      // Clean canvas clear
+      // Clean container
       container.innerHTML = '';
       container.appendChild(renderer.domElement);
 
@@ -44,9 +43,8 @@ export const Hero3DCanvas: React.FC = () => {
       scene.add(mainGroup);
 
       // 1. TorusKnot outer wireframe mesh
-      // Reduced detail on mobile for smoothness
-      const knotRadius = isMobile ? 1.3 : 1.5;
-      const tubeRadius = isMobile ? 0.35 : 0.42;
+      const knotRadius = isMobile ? 1.2 : 1.5;
+      const tubeRadius = isMobile ? 0.32 : 0.42;
       const tubularSegments = isMobile ? 64 : 120;
       const radialSegments = isMobile ? 12 : 20;
 
@@ -57,7 +55,7 @@ export const Hero3DCanvas: React.FC = () => {
         radialSegments
       );
 
-      // Wireframe Material with Cobalt Blue & Orange accent look
+      // Wireframe Material with dynamic reflections
       const material = new THREE.MeshPhysicalMaterial({
         color: 0x1B4DFF,
         emissive: 0x1230B3,
@@ -71,7 +69,7 @@ export const Hero3DCanvas: React.FC = () => {
       mainGroup.add(mesh);
 
       // 2. Inner floating glowing core particles
-      const particleCount = isMobile ? 150 : 350;
+      const particleCount = isMobile ? 160 : 350;
       const particleGeo = new THREE.BufferGeometry();
       const particlePositions = new Float32Array(particleCount * 3);
       const particleColors = new Float32Array(particleCount * 3);
@@ -80,7 +78,7 @@ export const Hero3DCanvas: React.FC = () => {
       const color2 = new THREE.Color(0xFF5A1F); // Orange
 
       for (let i = 0; i < particleCount; i++) {
-        const radius = 1.2 + Math.random() * 1.5;
+        const radius = (isMobile ? 1.0 : 1.2) + Math.random() * 1.5;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(2 * Math.random() - 1);
 
@@ -98,7 +96,7 @@ export const Hero3DCanvas: React.FC = () => {
       particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
       const particleMat = new THREE.PointsMaterial({
-        size: isMobile ? 0.04 : 0.05,
+        size: isMobile ? 0.045 : 0.05,
         vertexColors: true,
         transparent: true,
         opacity: 0.85
@@ -108,12 +106,12 @@ export const Hero3DCanvas: React.FC = () => {
       mainGroup.add(particlePoints);
 
       // 3. Inner Icosahedron accent core
-      const innerCoreGeo = new THREE.IcosahedronGeometry(0.7, 1);
+      const innerCoreGeo = new THREE.IcosahedronGeometry(isMobile ? 0.55 : 0.7, 1);
       const innerCoreMat = new THREE.MeshBasicMaterial({
         color: 0xFF5A1F,
         wireframe: true,
         transparent: true,
-        opacity: 0.7
+        opacity: 0.75
       });
       const innerCoreMesh = new THREE.Mesh(innerCoreGeo, innerCoreMat);
       mainGroup.add(innerCoreMesh);
@@ -130,25 +128,23 @@ export const Hero3DCanvas: React.FC = () => {
       pointLight2.position.set(-5, -5, -2);
       scene.add(pointLight2);
 
-      // Mouse tracking variables
-      let mouseX = 0;
-      let mouseY = 0;
+      // Mouse and Touch tracking
       let targetX = 0;
       let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
 
       const handlePointerMove = (e: MouseEvent | TouchEvent) => {
-        if (isMobile) return; // Disable mouse-tracking on mobile for smooth performance
         const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
         const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
 
         const rect = container.getBoundingClientRect();
-        mouseX = ((clientX - rect.left) / rect.width) * 2 - 1;
-        mouseY = -(((clientY - rect.top) / rect.height) * 2 - 1);
+        targetX = ((clientX - rect.left) / rect.width) * 2 - 1;
+        targetY = -(((clientY - rect.top) / rect.height) * 2 - 1);
       };
 
-      if (!isMobile) {
-        window.addEventListener('mousemove', handlePointerMove);
-      }
+      window.addEventListener('mousemove', handlePointerMove, { passive: true });
+      container.addEventListener('touchmove', handlePointerMove, { passive: true });
 
       // Animation Loop
       const clock = new THREE.Clock();
@@ -157,37 +153,36 @@ export const Hero3DCanvas: React.FC = () => {
         animId = requestAnimationFrame(animate);
         const elapsedTime = clock.getElapsedTime();
 
-        // Rotation
-        mesh.rotation.x = elapsedTime * 0.25;
-        mesh.rotation.y = elapsedTime * 0.35;
+        // Object rotation
+        mesh.rotation.x = elapsedTime * 0.22;
+        mesh.rotation.y = elapsedTime * 0.32;
 
-        innerCoreMesh.rotation.x = -elapsedTime * 0.4;
-        innerCoreMesh.rotation.y = elapsedTime * 0.5;
+        innerCoreMesh.rotation.x = -elapsedTime * 0.35;
+        innerCoreMesh.rotation.y = elapsedTime * 0.45;
 
-        particlePoints.rotation.y = -elapsedTime * 0.15;
+        particlePoints.rotation.y = -elapsedTime * 0.12;
 
-        // Smooth mouse reaction on desktop
-        if (!isMobile) {
-          targetX += (mouseX - targetX) * 0.05;
-          targetY += (mouseY - targetY) * 0.05;
+        // Smooth interactive reaction on both touch and mouse
+        currentX += (targetX - currentX) * 0.05;
+        currentY += (targetY - currentY) * 0.05;
 
-          mainGroup.rotation.y = targetX * 0.6;
-          mainGroup.rotation.x = -targetY * 0.6;
-        }
+        mainGroup.rotation.y = currentX * 0.5;
+        mainGroup.rotation.x = -currentY * 0.5;
 
         // Floating hover effect
-        mainGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.12;
+        mainGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.1;
 
         renderer?.render(scene, camera);
       };
 
       animate();
 
-      // Responsive Resize
+      // Responsive Resize Observer
       const handleResize = () => {
         if (!container || !renderer) return;
         const width = container.clientWidth;
         const height = container.clientHeight;
+        if (width === 0 || height === 0) return;
 
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
@@ -198,13 +193,12 @@ export const Hero3DCanvas: React.FC = () => {
       const resizeObserver = new ResizeObserver(handleResize);
       resizeObserver.observe(container);
 
-      // Cleanup function
+      // Cleanup
       return () => {
         cancelAnimationFrame(animId);
         resizeObserver.disconnect();
-        if (!isMobile) {
-          window.removeEventListener('mousemove', handlePointerMove);
-        }
+        window.removeEventListener('mousemove', handlePointerMove);
+        container.removeEventListener('touchmove', handlePointerMove);
         geometry.dispose();
         material.dispose();
         particleGeo.dispose();
@@ -220,15 +214,15 @@ export const Hero3DCanvas: React.FC = () => {
       console.error('WebGL Hero 3D initialization failed, showing fallback UI:', err);
       setHasError(true);
     }
-  }, [activeShape]);
+  }, []);
 
   // Fallback UI if WebGL is unavailable
   if (hasError) {
     return (
-      <div className="relative w-full h-[380px] sm:h-[480px] flex items-center justify-center p-6">
+      <div className="relative w-full h-[280px] sm:h-[400px] flex items-center justify-center p-4">
         <div className="absolute inset-0 bg-gradient-to-tr from-[#1B4DFF]/20 via-transparent to-[#FF5A1F]/20 rounded-3xl blur-2xl animate-pulse" />
-        <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full border-2 border-dashed border-[#1B4DFF]/40 dark:border-[#FF5A1F]/40 flex items-center justify-center animate-spin-slow">
-          <div className="w-48 h-48 sm:w-60 sm:h-60 rounded-3xl bg-gradient-to-br from-[#1B4DFF] to-[#FF5A1F] opacity-80 blur-lg transform rotate-45" />
+        <div className="relative w-56 h-56 sm:w-72 sm:h-72 rounded-full border-2 border-dashed border-[#1B4DFF]/40 dark:border-[#FF5A1F]/40 flex items-center justify-center animate-spin-slow">
+          <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-3xl bg-gradient-to-br from-[#1B4DFF] to-[#FF5A1F] opacity-80 blur-lg transform rotate-45" />
           <div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-black/60 dark:text-white/60">
             [Interactive 3D Preview]
           </div>
@@ -238,21 +232,21 @@ export const Hero3DCanvas: React.FC = () => {
   }
 
   return (
-    <div className="relative w-full h-[360px] sm:h-[480px] lg:h-[540px] flex items-center justify-center">
+    <div className="relative w-full h-[280px] xs:h-[340px] sm:h-[440px] lg:h-[500px] flex items-center justify-center">
       {/* Background glow circle */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 bg-[#1B4DFF]/15 dark:bg-[#1B4DFF]/25 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 left-1/3 w-48 h-48 bg-[#FF5A1F]/15 dark:bg-[#FF5A1F]/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 sm:w-80 sm:h-80 bg-[#1B4DFF]/15 dark:bg-[#1B4DFF]/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/3 w-40 h-40 bg-[#FF5A1F]/15 dark:bg-[#FF5A1F]/20 rounded-full blur-3xl pointer-events-none" />
 
       {/* Interactive 3D Canvas Container */}
       <div
         ref={containerRef}
-        className="w-full h-full cursor-grab active:cursor-grabbing z-10"
+        className="w-full h-full cursor-grab active:cursor-grabbing z-10 touch-pan-y"
       />
 
       {/* Floating 3D Badge Indicator */}
-      <div className="absolute bottom-2 right-4 sm:bottom-4 sm:right-6 bg-black/40 dark:bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-mono text-white/90 border border-white/10 shadow-lg pointer-events-none flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-[#00C48C] animate-ping" />
-        <span className="w-2 h-2 rounded-full bg-[#00C48C]" />
+      <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-6 bg-black/40 dark:bg-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-mono text-white/90 border border-white/10 shadow-lg pointer-events-none flex items-center gap-1.5 sm:gap-2">
+        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#00C48C] animate-ping" />
+        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#00C48C]" />
         <span>3D Wireframe Canvas</span>
       </div>
     </div>
