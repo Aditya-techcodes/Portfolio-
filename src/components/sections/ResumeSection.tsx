@@ -58,7 +58,7 @@ export const ResumeSection: React.FC = () => {
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Text */}
           <div className="lg:col-span-8 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-mono text-[#00C48C]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-mono text-[#FF5A1F]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Full Stack & MERN Developer Resume</span>
             </div>
@@ -74,19 +74,19 @@ export const ResumeSection: React.FC = () => {
             {/* Quick Summary Highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <div className="flex items-center gap-2 text-xs font-mono text-white/90">
-                <CheckCircle2 className="w-4 h-4 text-[#00C48C]" />
+                <CheckCircle2 className="w-4 h-4 text-[#FF5A1F]" />
                 <span>BCA Degree (2024–2027) | CGPA: 7.8/10</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-mono text-white/90">
-                <CheckCircle2 className="w-4 h-4 text-[#00C48C]" />
+                <CheckCircle2 className="w-4 h-4 text-[#FF5A1F]" />
                 <span>MERN Stack (MongoDB, Express, React, Node)</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-mono text-white/90">
-                <CheckCircle2 className="w-4 h-4 text-[#00C48C]" />
+                <CheckCircle2 className="w-4 h-4 text-[#FF5A1F]" />
                 <span>Synergy+ Hospital & NestMart MERN Projects</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-mono text-white/90">
-                <CheckCircle2 className="w-4 h-4 text-[#00C48C]" />
+                <CheckCircle2 className="w-4 h-4 text-[#FF5A1F]" />
                 <span>Apna College Full Stack Certification</span>
               </div>
             </div>
@@ -133,7 +133,7 @@ export const ResumeSection: React.FC = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={openResumePdfInNewTab}
-                  className="text-xs font-mono bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-[#00C48C] transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="text-xs font-mono bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-[#FF5A1F] transition-colors flex items-center gap-1.5 cursor-pointer font-bold"
                 >
                   <span>Open PDF File</span>
                   <ExternalLink className="w-3.5 h-3.5" />

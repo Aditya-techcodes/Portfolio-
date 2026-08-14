@@ -12,7 +12,7 @@ import { ContactSection } from './components/sections/ContactSection';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#FBFAF7] text-[#16161C] dark:bg-[#0E0E12] dark:text-[#FBFAF7] transition-colors duration-300 font-sans selection:bg-[#1B4DFF]/30 selection:text-[#1B4DFF] relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#0E0E12] text-[#FBFAF7] font-sans selection:bg-[#FF5A1F]/30 selection:text-[#FF5A1F] relative overflow-x-hidden">
       {/* Sticky Header Navigation */}
       <Navbar />
 
@@ -33,4 +33,3 @@ export default function App() {
     </div>
   );
 }
-

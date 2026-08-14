@@ -44,10 +44,10 @@ export const HeroSection: React.FC = () => {
         >
           {/* Availability Badge */}
           {personalInfo.availableForHire && (
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00C48C]/15 border border-[#00C48C]/30 text-[#024330] dark:text-[#00C48C] text-xs font-mono font-medium shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1B4DFF]/10 dark:bg-[#1B4DFF]/20 border border-[#1B4DFF]/30 text-[#1B4DFF] dark:text-[#FBFAF7] text-xs font-mono font-medium shadow-sm">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C48C] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00C48C]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF5A1F] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5A1F]"></span>
               </span>
               <span>Available for new roles & projects</span>
             </div>

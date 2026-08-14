@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Code2, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { personalInfo } from '../../data/portfolioData';
-import { ThemeToggle } from '../ui/ThemeToggle';
 
 const navLinks = [
   { name: 'About', href: '#about' },
@@ -63,7 +62,7 @@ export const Navbar: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'py-3 bg-[#FBFAF7]/90 dark:bg-[#0E0E12]/90 backdrop-blur-md shadow-sm border-b border-black/10 dark:border-white/10'
+          ? 'py-3 bg-[#0E0E12]/90 backdrop-blur-md shadow-lg border-b border-white/10'
           : 'py-5 bg-transparent'
       }`}
     >
@@ -72,18 +71,18 @@ export const Navbar: React.FC = () => {
         <a
           href="#top"
           onClick={(e) => handleNavClick(e, '#top')}
-          className="group flex items-center gap-2.5 font-heading text-base sm:text-lg font-bold text-[#16161C] dark:text-[#FBFAF7]"
+          className="group flex items-center gap-2.5 font-heading text-base sm:text-lg font-bold text-[#FBFAF7]"
         >
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#1B4DFF] to-[#FF5A1F] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
             <Code2 className="w-5 h-5" />
           </div>
-          <span className="tracking-tight">
+          <span className="tracking-tight text-[#FBFAF7]">
             {personalInfo.name}
           </span>
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 bg-black/5 dark:bg-white/5 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10">
+        <nav className="hidden lg:flex items-center gap-1 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
@@ -94,30 +93,28 @@ export const Navbar: React.FC = () => {
                 className={`relative px-4 py-1.5 text-xs font-heading font-semibold transition-colors rounded-full ${
                   isActive
                     ? 'text-white'
-                    : 'text-[#16161C]/70 dark:text-[#FBFAF7]/70 hover:text-[#1B4DFF] dark:hover:text-[#FF5A1F]'
+                    : 'text-[#FBFAF7]/70 hover:text-[#FF5A1F]'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNavTab"
-                    className="absolute inset-0 bg-[#1B4DFF] dark:bg-[#FF5A1F] rounded-full -z-10 shadow-sm"
+                    className="absolute inset-0 bg-[#FF5A1F] rounded-full -z-10 shadow-sm"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
-                {link.name}
+                <span>{link.name}</span>
               </a>
             );
           })}
         </nav>
 
-        {/* Right CTA + Theme Toggle */}
+        {/* Right CTA */}
         <div className="flex items-center gap-3">
-          <ThemeToggle />
-
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#16161C] text-white dark:bg-[#FBFAF7] dark:text-[#16161C] font-heading font-semibold text-xs tracking-wide shadow-md hover:bg-[#1B4DFF] dark:hover:bg-[#FF5A1F] dark:hover:text-white transition-all transform hover:-translate-y-0.5 cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#FBFAF7] text-[#16161C] font-heading font-semibold text-xs tracking-wide shadow-md hover:bg-[#FF5A1F] hover:text-white transition-all transform hover:-translate-y-0.5 cursor-pointer"
           >
             <span>Let's Talk</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -128,7 +125,7 @@ export const Navbar: React.FC = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             id="mobile-menu-toggle-btn"
             aria-label="Toggle Navigation Menu"
-            className="lg:hidden p-2.5 rounded-full bg-black/5 dark:bg-white/10 text-[#16161C] dark:text-[#FBFAF7] border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/20 transition-colors"
+            className="lg:hidden p-2.5 rounded-full bg-white/10 text-[#FBFAF7] border border-white/10 hover:bg-white/20 transition-colors"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -143,7 +140,7 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="lg:hidden bg-[#FBFAF7] dark:bg-[#0E0E12] border-b border-black/10 dark:border-white/10 overflow-hidden"
+            className="lg:hidden bg-[#0E0E12] border-b border-white/10 overflow-hidden"
           >
             <div className="px-6 py-6 space-y-2 max-w-md mx-auto">
               {navLinks.map((link) => {
@@ -155,8 +152,8 @@ export const Navbar: React.FC = () => {
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`flex items-center justify-between p-3.5 rounded-2xl text-xs font-heading font-semibold transition-colors ${
                       isActive
-                        ? 'bg-[#1B4DFF] text-white dark:bg-[#FF5A1F]'
-                        : 'text-[#16161C] dark:text-[#FBFAF7] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10'
+                        ? 'bg-[#FF5A1F] text-white'
+                        : 'text-[#FBFAF7] bg-white/5 border border-white/10 hover:bg-white/10'
                     }`}
                   >
                     <span>{link.name}</span>
@@ -182,5 +179,3 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
-
-

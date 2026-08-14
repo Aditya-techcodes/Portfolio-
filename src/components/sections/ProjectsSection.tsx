@@ -197,7 +197,7 @@ export const ProjectsSection: React.FC = () => {
                     About this project:
                   </h4>
                   <p className="text-xs sm:text-sm text-[#16161C]/80 dark:text-[#FBFAF7]/80 leading-relaxed font-body">
-                    {activeModalProject.longDescription}
+                    {activeModalProject.fullDescription}
                   </p>
                 </div>
 

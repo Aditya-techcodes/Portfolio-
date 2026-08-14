@@ -4,13 +4,9 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Space Grotesk', sans-serif;
-    background-color: #FBFAF7;
-    color: #16161C;
-  }
-
-  html.dark {
     background-color: #0E0E12;
     color: #FBFAF7;
+    color-scheme: dark;
   }
 
   h1, h2, h3, h4, h5, h6, .font-heading {
@@ -25,9 +21,9 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* Keyboard focus states */
+  /* Accessible keyboard focus states */
   *:focus-visible {
-    outline: 2px solid #1B4DFF;
+    outline: 2px solid #FF5A1F;
     outline-offset: 2px;
   }
 }
@@ -45,23 +41,23 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom scrollbar styling for modern theme */
+/* Custom scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
-.dark ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
+
 ::-webkit-scrollbar-thumb {
-  background: rgba(27, 77, 255, 0.3);
+  background: rgba(255, 90, 31, 0.35);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #1B4DFF;
+  background: #FF5A1F;
 }
 
 /* Accent utilities */
@@ -81,4 +77,7 @@
   background-color: #FF5A1F;
 }
 
-
+/* Perspective utility */
+.perspective-1000 {
+  perspective: 1000px;
+}
