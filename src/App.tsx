@@ -10,6 +10,7 @@ import { TimelineSection } from './components/sections/TimelineSection';
 import { GitHubStatsSection } from './components/sections/GitHubStatsSection';
 import { ResumeSection } from './components/sections/ResumeSection';
 import { ContactSection } from './components/sections/ContactSection';
+import { ScrollToTopButton } from './components/ui/ScrollToTopButton';
 
 export default function App() {
   return (
@@ -29,6 +30,9 @@ export default function App() {
           <ResumeSection />
           <ContactSection />
         </main>
+
+        {/* Sticky Scroll to Top Floating Button */}
+        <ScrollToTopButton />
 
         {/* Footer */}
         <Footer />
