@@ -1,5 +1,0 @@
-Put your 3D model (.glb or .gltf) in this folder.
-Recommended filenames:
-- sen_you.glb
-- character.glb
-- model.glb
